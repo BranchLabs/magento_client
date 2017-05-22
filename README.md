@@ -13,10 +13,10 @@ magento = MagentoClient.new({
 	:secret => 'OAuth Consumer Secret',
 	:username => 'Magento Admin username',
 	:password => 'Magento Admin password',
+	:store_code => 'en' # Used for Magento stores with multiple store views on the same domain.
 })
 
 products = magento.get('/api/rest/products')
 
 puts "Fetched #{products.count} products"
 ```
-

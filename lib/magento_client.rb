@@ -30,11 +30,15 @@ class MagentoClient
   end
 
   def consumer
+    # Need to authorize directly with a specific store view for Magento sites with multiple
+    # on one domain.
+    store_code = "/#{@config.store_code}" unless @config.store_code.nil?
+
     @consumer ||= OAuth::Consumer.new(@config.key, @config.secret,
       :site => @config.url,
-      :request_token_path => "/index.php/oauth/initiate",
-      :authorize_path => "/index.php/admin/oauth_authorize",
-      :access_token_path => "/index.php/oauth/token",
+      :request_token_path => "#{store_code}/oauth/initiate",
+      :authorize_path => "#{store_code}/admin/oauth_authorize",
+      :access_token_path => "#{store_code}/oauth/token",
       :http_method => :get
     )
   end
